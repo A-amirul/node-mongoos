@@ -2,6 +2,7 @@ const Task = require("./task.model");
 const { addToDb, getAllTask, getSingleTask, deleteSingleTask, updateSingleTask } = require("./task.service");
 
 
+/*-----------------post a Task-------------*/
 exports.insertIntoDb = async (req, res) => {
     try {
         const result = await addToDb(req.body);
@@ -13,6 +14,7 @@ exports.insertIntoDb = async (req, res) => {
 };
 
 
+/*-----------------get all Task-------------*/
 exports.getIntoDb = async (req, res) => {
     try {
         const tasks = await getAllTask();
@@ -22,6 +24,9 @@ exports.getIntoDb = async (req, res) => {
         res.status(500).json({ success: false, error: 'Server Error' });
     }
 }
+
+
+/*-----------------get single Task-------------*/
 
 exports.getSingleTaskIntoDb = async (req, res) => {
     try {
@@ -35,6 +40,9 @@ exports.getSingleTaskIntoDb = async (req, res) => {
         res.status(500).json({ success: false, error: 'Server Error' });
     }
 }
+
+
+/*-----------------Delete Task-------------*/
 
 exports.deleteTaskIntoDb = async (req, res) => {
     try {
@@ -52,10 +60,9 @@ exports.deleteTaskIntoDb = async (req, res) => {
 }
 
 
+
+/*-----------------Update Task-------------*/
 exports.updateTaskIntoDb = async (req, res) => {
-
-
-
     try {
         const id = req.params.id;
         const data=req.body;
