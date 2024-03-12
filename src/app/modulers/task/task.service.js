@@ -15,3 +15,13 @@ exports.getSingleTask = async (id) => {
     const result = await Task.findById(id);
     return result;
 };
+
+exports.deleteSingleTask = async (id) => {
+    const result = await Task.findByIdAndDelete(id);
+    return result;
+};
+
+exports.updateSingleTask = async (id,data) => {
+    const result = await Task.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+    return result;
+};
