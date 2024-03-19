@@ -1,5 +1,5 @@
 const { param } = require("../../routes/routes");
-const { addStudent, getAllStudent, deleteSingleStudent } = require("./student.service");
+const { addStudent, getAllStudent, deleteSingleStudent, updateSingleStudent } = require("./student.service");
 
 
 /*-----------post student---------*/
@@ -38,4 +38,23 @@ exports.deleteStudentIntoDb = async (req, res) => {
         res.status(500).json({ success: false, error: "server error" });
     }
 
+}
+
+
+/*-----------------Update Task-------------*/
+exports.updateStudentIntoDb = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data=req.body;
+        const student = await updateSingleStudent(id,data);
+
+        if (!student) {
+            return res.status(404).json({ success: false, error: 'Student not found' });
+        }
+
+        res.json({ success: true, message: "Student Update Successfully!", data: student });
+    } catch (error) {
+        console.error(error.message);
+        res.status(400).json({ success: false, error: 'Error updating student' });
+    }
 }

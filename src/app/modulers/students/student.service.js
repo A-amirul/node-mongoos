@@ -15,3 +15,8 @@ exports.deleteSingleStudent = async (id) => {
     return result;
 
 }
+
+exports.updateSingleStudent = async (id, data) => {
+    const result = await Student.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+    return result;
+};
