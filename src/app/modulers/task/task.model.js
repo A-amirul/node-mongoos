@@ -2,6 +2,11 @@
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
+  student: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student',
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -10,10 +15,17 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  completed: {
-    type: Boolean,
-    default: false,
+  document: {
+    type: String, 
+    required: false,
   },
+  image: {
+    type: String, 
+    required: false,
+  }
+
+
+  
 },{
   timestamps: true,
   toJSON: {

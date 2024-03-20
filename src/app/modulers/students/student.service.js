@@ -1,7 +1,7 @@
 const Student = require("./student.model")
 
 exports.addStudent = async (data) => {
-    const result = await Student.create(data);
+    const result = (await Student.create(data));
     return result;
 }
 

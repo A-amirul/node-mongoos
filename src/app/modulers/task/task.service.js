@@ -7,7 +7,7 @@ exports.addToDb = async (data) => {
 
 
 exports.getAllTask = async () => {
-    const result = await Task.find({});
+    const result = await Task.find({}).populate("student");
     return result;
 };
 
@@ -21,7 +21,7 @@ exports.deleteSingleTask = async (id) => {
     return result;
 };
 
-exports.updateSingleTask = async (id,data) => {
+exports.updateSingleTask = async (id, data) => {
     const result = await Task.findByIdAndUpdate(id, data, { new: true, runValidators: true });
     return result;
 };
