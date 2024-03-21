@@ -1,28 +1,24 @@
-// models/task.js
+// models/class.js
 const mongoose = require('mongoose');
 
-const taskSchema = new mongoose.Schema({
+const classSchema = new mongoose.Schema({
   student: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Student',
     required: true,
   },
-  title: {
+  name: {
     type: String,
+    required: true,
+  },
+  roll_no: {
+    type: number,
     required: true,
   },
   description: {
     type: String,
     required: true,
   },
-  document: {
-    type: String, 
-    required: false,
-  },
-  image: {
-    type: String, 
-    required: false,
-  }
   
 },{
   timestamps: true,
@@ -31,6 +27,6 @@ const taskSchema = new mongoose.Schema({
   }
 });
 
-const Task = mongoose.model('Task', taskSchema);
+const Class = mongoose.model('Class', classSchema);
 
-module.exports = Task;
+module.exports = Class;
