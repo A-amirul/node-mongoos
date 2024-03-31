@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose');
 const cors = require('cors');
 const router = require('./routes/routes');
+const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +28,8 @@ mongoose.connect(`${process.env.DB_URL}`, {
 });
 
 app.use("/api/v1", router);
+app.use(express.static(__dirname + '/public'));
+app.use('/uploads', express.static('uploads'));
 
 // Check MongoDB connection
 const db = mongoose.connection;
