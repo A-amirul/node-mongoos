@@ -28,6 +28,7 @@ mongoose.connect(`${process.env.DB_URL}`, {
 });
 
 app.use("/api/v1", router);
+
 app.use(express.static(__dirname + '/public'));
 app.use('/uploads', express.static('uploads'));
 

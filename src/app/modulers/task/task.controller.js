@@ -1,43 +1,40 @@
-const { FileUploadHelper } = require("../../../helper/image.upload");
-const Task = require("./task.model");
+const cloudinary = require("../../utils/cloudinary");
+
 const { addToDb, getAllTask, getSingleTask, deleteSingleTask, updateSingleTask } = require("./task.service");
 
-
 /*-----------------post a Task-------------*/
-// exports.insertIntoDb = async (req, res) => {
-//     try {
-//         console.log(req.file);
-//         if (!req.file) {
-//             res.status(400).send('No file uploaded.');
-//             return;
-//         }
-//         const result = await addToDb(req.body);
-//         res.status(201).json({ success: true, message: "Task added successfully!", data: result });
-//     } catch (error) {
-//         console.error(error.message);
-//         res.status(400).json({ success: false, error: 'Error creating task' });
-//     }
-// };
-
-// post a task image
 exports.insertIntoDb = async (req, res) => {
     try {
         const datas = req.body;
-        if (req.files && 'image' in req.files) {
-            const image = req.files['image'][0];
-            const image_upload = await FileUploadHelper.uploadToCloudinary(image);
-            image = image_upload?.secure_url;
-            const data = { ...datas, image };
-            const result = await addToDb(data);
-            console.log(result);
-
-
+        if (!req.file) {
+            res.status(400).send('No file uploaded.');
+            return;
         }
 
+        cloudinary.uploader.upload(req.file.path, async function (error, result) {
+            if (error) {
+                console.error(error.message);
+                res.status(400).json({ success: false, error: 'Error uploading file' });
+                return;
+            }
+
+            const taskData = {
+                ...datas,
+                image: result.secure_url
+            };
+
+            const savedTask = await addToDb(taskData);
+
+
+            res.status(200).json({ success: true, message: "Task added successfully!", data: savedTask });
+        });
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
-}
+};
+
+
 
 
 /*-----------------get all Task-------------*/
