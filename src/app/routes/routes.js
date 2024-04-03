@@ -2,6 +2,7 @@ const express = require("express");
 const taskRoutes = require("../modulers/task/task.routes");
 const studentRoutes = require("../modulers/students/student.routes");
 const classRoutes = require("../modulers/classes/class.routes");
+const userRoutes = require("../modulers/users/user.routes");
 
 const router = express.Router();
 
@@ -17,6 +18,10 @@ const modulesRoutes = [
     {
         path: "/class",
         route: classRoutes
+    },
+    {
+        path: "/user",
+        route: userRoutes
     }
 ];
 

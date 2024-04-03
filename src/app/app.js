@@ -22,8 +22,6 @@ app.get("/", (req, res) => {
 
 // MongoDB connection
 mongoose.connect(`${process.env.DB_URL}`, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   autoIndex: true
 });
 

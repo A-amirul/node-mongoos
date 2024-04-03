@@ -1,9 +1,9 @@
-const { param } = require("../../routes/routes");
-const { addStudent, getAllStudent, deleteSingleStudent, updateSingleStudent } = require("./student.service");
 
+const { addStudent, getAllStudent, deleteSingleStudent, updateSingleStudent } = require("./student.service");
 
 /*-----------post student---------*/
 exports.insertIntoDb = async (req, res) => {
+    // console.log(req.body);
     try {
         const result = await addStudent(req.body);
         res.status(201).json({ success: true, message: "Student Added Successfully!", data: result });
