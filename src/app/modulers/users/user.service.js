@@ -2,11 +2,10 @@ const bcrypt = require('bcryptjs');
 const User = require('../users/user.model');
 
 exports.addUser = async (data) => {
-    console.log(data);
     try {
-        const { username, password } = data;
+        const { username, email, password } = data;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ username, password: hashedPassword });
+        const user = new User({ username, email, password: hashedPassword });
         const result = await user.save();
         return result;
     } catch (error) {
@@ -20,13 +19,15 @@ exports.authenticateUser = async (data) => {
         const { username, password } = data;
         const user = await User.findOne({ username });
         if (!user) {
-            throw new Error('User not found');
+            throw new Error('Invalid username or password');
         }
 
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
-            throw new Error('Invalid password');
+            throw new Error('Invalid username or password');
         }
+
+        return user; // Return the user object if authentication is successful
 
     } catch (error) {
         console.error(error);
