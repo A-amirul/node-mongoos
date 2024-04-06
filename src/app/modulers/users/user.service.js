@@ -34,3 +34,9 @@ exports.authenticateUser = async (data) => {
         throw new Error('Invalid username or password');
     }
 }
+
+
+exports.getAllUser = async () => {
+    const result = await User.find({});
+    return result;
+};

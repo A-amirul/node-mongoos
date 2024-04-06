@@ -1,4 +1,4 @@
-const { addUser, authenticateUser } = require('../users/user.service');
+const { addUser, authenticateUser, getAllUser } = require('../users/user.service');
 const jwt = require('jsonwebtoken');
 const secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hem11bEBnbWFpbC5jb20iLCJpYXQiOjE2OTQ0MzExOTF9.xtLPsJrvJ0Gtr4rsnHh1kok51_pU10_hYLilZyBiRAM";
 
@@ -32,3 +32,15 @@ exports.authenticateUserFromDb = async (req, res) => {
         res.status(401).json({ success: false, error: "Invalid username or password" });
     }
 }
+
+
+exports.getUserIntoDb = async (req, res) => {
+    try {
+        const users = await getAllUser();
+        res.json({ success: true, message: "Task retrieve successfully!", data: users });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ success: false, error: 'Server Error' });
+    }
+}
+

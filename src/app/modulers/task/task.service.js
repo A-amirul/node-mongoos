@@ -7,7 +7,7 @@ exports.addToDb = async (data) => {
 
 
 exports.getAllTask = async () => {
-    const result = await Task.find({}).populate("student");
+    const result = await Task.find({}).populate("student_id");
     return result;
 };
 

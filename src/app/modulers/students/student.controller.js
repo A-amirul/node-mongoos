@@ -1,13 +1,34 @@
 
+const cloudinary = require("../../utils/cloudinary");
 const { addStudent, getAllStudent, deleteSingleStudent, updateSingleStudent } = require("./student.service");
 
 /*-----------post student---------*/
 exports.insertIntoDb = async (req, res) => {
     // console.log(req.body);
     try {
-        const result = await addStudent(req.body);
-        res.status(201).json({ success: true, message: "Student Added Successfully!", data: result });
+        const datas = req.body;
+        if (!req.file) {
+            res.status(400).send('No file uploaded');
+            return;
+        }
+        cloudinary.uploader.upload(req.file.path, async function (error, result) {
+            if (error) {
+                console.error(error.message);
+                res.status(400).json({ success: false, error: "Error uploading file" })
+                return;
+            }
+
+            const studentData = {
+                ...datas,
+                student_image: result.secure_url
+            }
+
+            const savedStudent = await addStudent(studentData)
+            res.status(201).json({ success: true, message: "Student Added Successfully!", data: savedStudent });
+        })
+
     } catch (error) {
+        console.error(error.message);
         res.status(400).json({ success: false, error: "Server Error" });
     }
 }
@@ -45,8 +66,8 @@ exports.deleteStudentIntoDb = async (req, res) => {
 exports.updateStudentIntoDb = async (req, res) => {
     try {
         const id = req.params.id;
-        const data=req.body;
-        const student = await updateSingleStudent(id,data);
+        const data = req.body;
+        const student = await updateSingleStudent(id, data);
 
         if (!student) {
             return res.status(404).json({ success: false, error: 'Student not found' });

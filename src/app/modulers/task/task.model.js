@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
-  student: {
+  student_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Student',
     required: true,
@@ -16,19 +16,19 @@ const taskSchema = new mongoose.Schema({
     required: true,
   },
   document: {
-    type: String, 
+    type: String,
   },
   image: {
-    type: String, 
+    type: String,
   }
-  
-},{
+
+}, {
   timestamps: true,
   toJSON: {
     virtuals: true,
   }
 });
 
-const Task = mongoose.model('tasks', taskSchema);
+const Task = mongoose.model('Task', taskSchema);
 
 module.exports = Task;

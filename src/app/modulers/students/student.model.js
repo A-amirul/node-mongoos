@@ -5,13 +5,11 @@ const studentSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   class_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'class',
+    ref: 'Class',
     required: true,
-
   },
   age: {
     type: Number,
@@ -24,6 +22,10 @@ const studentSchema = new mongoose.Schema({
   subjects: {
     type: String,
     required: true,
+  },
+  student_image:{
+    type:String,
+    required:true,
   },
   active: {
     type: Boolean,
@@ -51,6 +53,6 @@ const studentSchema = new mongoose.Schema({
     }
   });
 
-const Student = mongoose.model('students', studentSchema);
+const Student = mongoose.model('Student', studentSchema);
 
 module.exports = Student;

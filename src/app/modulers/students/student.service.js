@@ -6,7 +6,7 @@ exports.addStudent = async (data) => {
 }
 
 exports.getAllStudent = async () => {
-    const result = await Student.find({});
+    const result = await Student.find({}).populate("class_id");
     return result;
 }
 
