@@ -3,8 +3,8 @@ const { insertIntoDb, getAllStudent, deleteStudentIntoDb, updateStudentIntoDb } 
 const upload = require('../../middleware/multer');
 const router = express.Router();
 
-router.post('/student-create', upload.single('student_image'), insertIntoDb);
-router.get('/student-list', getAllStudent);
+router.post('/create', upload.single('student_image'), insertIntoDb);
+router.get('/list', getAllStudent);
 router.delete('/:id', deleteStudentIntoDb);
 router.patch('/:id', updateStudentIntoDb);
 

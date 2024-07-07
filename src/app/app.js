@@ -32,11 +32,28 @@ app.use('/uploads', express.static('uploads'));
 
 // Check MongoDB connection
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));  
 db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
+// error handle start
+app.all("*", (req, res, next) => {
+  const err = new Error(`Page not found! ${req.originalUrl}`)
+  err.status = 'fail';
+  err.statusCode = 404;
+  next(err);
+})
+
+app.use((error, req, res, next) => {
+  error.statusCode = error.statusCode || 500;
+  error.status=error.status || "error"
+  res.status(error.statusCode).json({
+    status: "error",
+    message: error.message || "Something went wrong!"
+  });
+})
+// error handle end
 
 // Express.js routes and middleware can be added here
 
